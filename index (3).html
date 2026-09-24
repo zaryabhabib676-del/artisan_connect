@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Artisan Connect — Handmade from Lahore</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Yeseva+One&family=Karla:wght@400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --clay:#DB2777; --indigo:#7C3AED; --mustard:#C4B5FD; --parchment:#F5F0FF;
+    --ink:#2E1065; --maroon:#9D174D; --cream-card:#FFFFFF;
+    --pop1:#EC4899; --pop2:#C4B5FD; --pop-grad:linear-gradient(120deg,var(--indigo),var(--pop1));
+    --bg:#FFFFFF; --surface:var(--parchment); --text:var(--ink);
+    --text-soft:#5F4B8B; --border:#E0D6F7; --accent:var(--clay);
+    box-sizing:border-box;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#170B2E; --surface:#241143; --text:#F1E9FF; --text-soft:#C7B3EA;
+      --border:#3D2266; --cream-card:#241143;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#170B2E; --surface:#241143; --text:#F1E9FF; --text-soft:#C7B3EA;
+    --border:#3D2266; --cream-card:#241143;
+  }
+  html{ scroll-padding-top:env(safe-area-inset-top,0px); height:100%; }
+  *{ margin:0; padding:0; }
+  body{
+    height:100%; background:var(--bg); color:var(--text);
+    font-family:'Karla',-apple-system,BlinkMacSystemFont,sans-serif;
+    line-height:1.55; -webkit-font-smoothing:antialiased;
+  }
+  [lang="ur"]{ font-family:'Noto Nastaliq Urdu','Karla',sans-serif; direction:rtl; }
+  h1,h2,h3,.display{ font-family:'Yeseva One', 'Karla', serif; font-weight:400; letter-spacing:0.2px; }
+  img,svg{ max-width:100%; display:block; }
+  button{ font-family:inherit; cursor:pointer; border:none; background:none; color:inherit; }
+  a{ color:inherit; }
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 24px; }
+  .overflow-x{ overflow-x:auto; -webkit-overflow-scrolling:touch; }
+
+  /* ---------- Header ---------- */
+  header.site{
+    position:sticky; top:0; z-index:40; background:var(--bg);
+    border-bottom:1px solid var(--border);
+    padding-top:calc(env(safe-area-inset-top,0px) + 14px);
+  }
+  .pinstripe{
+    height:6px; width:100%; position:sticky; top:0; z-index:41;
+    background:repeating-linear-gradient(90deg, var(--indigo) 0 40px, var(--pop1) 40px 80px, var(--mustard) 80px 120px, var(--clay) 120px 160px);
+  }
+  .topbar{ display:flex; align-items:center; gap:18px; padding-bottom:14px; }
+  .brand{ display:flex; align-items:center; gap:10px; font-size:1.5rem; }
+  .brand-mark{ width:34px; height:34px; flex:none; }
+  .brand small{ display:block; font-family:'Karla',sans-serif; font-size:0.62rem; letter-spacing:0.06em; color:var(--text-soft); font-weight:600; }
+  .search-shell{
+    flex:1; display:flex; align-items:center; gap:8px; background:var(--surface);
+    border:1.5px solid var(--border); border-radius:3px; padding:8px 12px; max-width:520px;
+  }
+  .search-shell input{ flex:1; background:none; border:none; outline:none; color:var(--text); font-size:0.95rem; }
+  .icon-btn{ width:34px; height:34px; display:flex; align-items:center; justify-content:center; border-radius:50%; flex:none; }
+  .icon-btn svg{ width:18px; height:18px; }
+  .icon-btn.mic.listening{ background:var(--maroon); color:#fff; animation:pulse 1.1s infinite; }
+  @keyframes pulse{ 0%,100%{ box-shadow:0 0 0 0 rgba(122,46,46,.5);} 50%{ box-shadow:0 0 0 8px rgba(122,46,46,0);} }
+  .head-actions{ display:flex; align-items:center; gap:6px; margin-left:auto; }
+  .lang-toggle{ border:1.5px solid var(--border); border-radius:3px; padding:6px 10px; font-size:0.78rem; font-weight:700; letter-spacing:0.03em; }
+  .cart-btn{ position:relative; }
+  .cart-count{
+    position:absolute; top:-4px; right:-4px; background:var(--maroon); color:#fff;
+    font-size:0.65rem; width:17px; height:17px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700;
+  }
+  nav.cats{ display:flex; gap:22px; padding-bottom:12px; overflow-x:auto; }
+  nav.cats button{ font-size:0.86rem; font-weight:600; color:var(--text-soft); white-space:nowrap; padding-bottom:3px; border-bottom:2px solid transparent; }
+  nav.cats button.active,nav.cats button:hover{ color:var(--pop1); border-bottom-color:var(--pop1); }
+
+  /* ---------- Hero ---------- */
+  .hero{ padding:56px 0 44px; position:relative; overflow:hidden; }
+  .hero::before{
+    content:""; position:absolute; top:-30%; right:-10%; width:60%; height:160%;
+    background:radial-gradient(circle, rgba(236,72,153,0.18), rgba(124,58,237,0.10) 60%, transparent 75%);
+    pointer-events:none;
+  }
+  .hero-grid{ display:grid; grid-template-columns:1.15fr 0.85fr; gap:40px; align-items:center; }
+  .hero h1{ font-size:clamp(2.3rem,4.6vw,3.6rem); line-height:1.08; color:var(--indigo); }
+  :root[data-theme="dark"] .hero h1, @media (prefers-color-scheme:dark){ }
+  .hero p.lede{ margin-top:16px; max-width:46ch; color:var(--text-soft); font-size:1.05rem; }
+  .hero-cta{ margin-top:26px; display:flex; gap:12px; flex-wrap:wrap; }
+  .btn{ padding:12px 22px; border-radius:6px; font-weight:700; font-size:0.9rem; letter-spacing:0.01em; transition:transform .15s, box-shadow .15s; }
+  .btn-primary{ background:var(--pop-grad); color:#fff; box-shadow:0 4px 14px rgba(236,72,153,0.35); }
+  .btn-primary:hover{ transform:translateY(-2px); box-shadow:0 8px 20px rgba(236,72,153,0.45); }
+  .btn-ghost{ border:1.5px solid var(--indigo); color:var(--indigo); }
+  :root[data-theme="dark"] .btn-ghost{ border-color:var(--mustard); color:var(--mustard); }
+  .hero-pattern{ aspect-ratio:1/1; border-radius:6px; position:relative; overflow:hidden; background:
+     repeating-linear-gradient(135deg, var(--indigo) 0 18px, var(--mustard) 18px 22px, var(--clay) 22px 40px);
+     opacity:0.94; }
+  .hero-pattern::after{
+    content:""; position:absolute; inset:14px; border:2px dashed var(--parchment); border-radius:4px; opacity:0.55;
+  }
+
+  /* ---------- Section titles ---------- */
+  .section{ padding:40px 0; }
+  .section-head{ display:flex; align-items:baseline; justify-content:space-between; gap:16px; margin-bottom:22px; flex-wrap:wrap; }
+  .section-head h2{ font-size:1.7rem; color:var(--indigo); }
+  :root[data-theme="dark"] .section-head h2{ color:var(--mustard); }
+  .section-head p{ color:var(--text-soft); font-size:0.92rem; }
+
+  /* ---------- Category stalls ---------- */
+  .stall-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:14px; }
+  .stall{
+    position:relative; background:var(--surface); border:1.5px solid var(--border);
+    padding:22px 14px 16px; text-align:center; border-radius:2px 2px 10px 10px;
+  }
+  .stall::before{
+    content:""; position:absolute; top:-9px; left:50%; transform:translateX(-50%);
+    width:46px; height:16px; background:var(--indigo); border-radius:2px 2px 0 0;
+  }
+  .stall svg{ width:30px; height:30px; margin:0 auto 10px; color:var(--pop1); }
+  .stall b{ font-size:0.88rem; display:block; }
+  .stall span{ font-size:0.75rem; color:var(--text-soft); }
+  .stall.active{ border-color:var(--pop1); background:var(--parchment); box-shadow:0 0 0 2px var(--pop1) inset; }
+  :root[data-theme="dark"] .stall.active{ background:#33184F; }
+
+  /* ---------- Filters ---------- */
+  .filters{ display:flex; gap:14px; flex-wrap:wrap; margin-bottom:22px; }
+  .filter-group{ display:flex; flex-direction:column; gap:4px; }
+  .filter-group label{ font-size:0.72rem; font-weight:700; letter-spacing:0.03em; color:var(--text-soft); }
+  .filters select, .filters .price-lbl{
+    border:1.5px solid var(--border); background:var(--surface); color:var(--text);
+    padding:8px 12px; border-radius:3px; font-size:0.82rem; font-weight:600;
+  }
+
+  /* ---------- Product grid ---------- */
+  .product-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:18px; }
+  .card{ background:var(--surface); border:1.5px dashed var(--border); border-radius:4px; overflow:hidden; display:flex; flex-direction:column; }
+  .card-media{ aspect-ratio:4/3; position:relative; display:flex; align-items:center; justify-content:center; }
+  .card-media svg{ width:40%; height:40%; color:rgba(255,255,255,0.9); }
+  .card-body{ padding:14px 14px 16px; display:flex; flex-direction:column; gap:6px; flex:1; }
+  .card-cat{ font-size:0.68rem; font-weight:700; letter-spacing:0.04em; color:var(--clay); }
+  .card-title{ font-size:0.98rem; font-weight:700; line-height:1.3; }
+  .card-artisan{ font-size:0.78rem; color:var(--text-soft); }
+  .card-foot{ margin-top:auto; display:flex; align-items:center; justify-content:space-between; padding-top:8px; }
+  .price{ font-weight:800; color:#fff; background:var(--pop-grad); padding:3px 10px; border-radius:20px; font-size:0.86rem; box-shadow:0 2px 8px rgba(236,72,153,0.3); }
+  .add-btn{ background:var(--indigo); color:#fff; padding:7px 13px; border-radius:20px; font-size:0.78rem; font-weight:700; transition:transform .15s; }
+  .add-btn:hover{ transform:translateY(-2px); }
+  :root[data-theme="dark"] .add-btn{ background:var(--mustard); color:#221C17; }
+  .card{ cursor:pointer; }
+  .empty-msg{ text-align:center; padding:40px 0; color:var(--text-soft); }
+
+  /* ---------- Modal shells ---------- */
+  .overlay{ position:fixed; inset:0; background:rgba(20,16,10,0.55); z-index:80; display:none; align-items:flex-end; justify-content:center; }
+  .overlay.open{ display:flex; }
+  @media(min-width:720px){ .overlay{ align-items:center; } }
+  .sheet{
+    background:var(--bg); width:100%; max-width:640px; max-height:88vh; overflow-y:auto;
+    border-radius:14px 14px 0 0; padding:22px 22px calc(24px + env(safe-area-inset-bottom,0px));
+  }
+  @media(min-width:720px){ .sheet{ border-radius:10px; } }
+  .sheet-close{ float:right; font-size:1.3rem; width:34px; height:34px; border-radius:50%; }
+  .sheet-close:hover{ background:var(--surface); }
+
+  /* product detail */
+  .pd-gallery{ display:flex; gap:6px; margin-bottom:14px; }
+  .pd-thumb{ flex:1; aspect-ratio:1/1; border-radius:4px; display:flex; align-items:center; justify-content:center; }
+  .pd-thumb svg{ width:34%; color:rgba(255,255,255,0.9); }
+  .pd-cat{ font-size:0.72rem; font-weight:700; color:var(--clay); letter-spacing:0.04em; }
+  .pd-title{ font-size:1.5rem; margin:4px 0 8px; }
+  .pd-price{ font-size:1.25rem; font-weight:800; color:#fff; background:var(--pop-grad); display:inline-block; padding:5px 14px; border-radius:22px; margin-bottom:10px; box-shadow:0 3px 10px rgba(236,72,153,0.35); }
+  :root[data-theme="dark"] .pd-price{ color:#fff; }
+  .pd-desc{ color:var(--text-soft); font-size:0.92rem; margin-bottom:14px; }
+  .pd-story{ background:var(--surface); border-left:3px solid var(--clay); padding:12px 14px; font-size:0.87rem; border-radius:0 4px 4px 0; margin-bottom:16px; }
+  .pd-story b{ display:block; margin-bottom:3px; color:var(--indigo); }
+  :root[data-theme="dark"] .pd-story b{ color:var(--mustard); }
+  .pd-meta{ display:flex; gap:16px; font-size:0.8rem; color:var(--text-soft); margin-bottom:16px; flex-wrap:wrap; }
+  .pd-actions{ display:flex; gap:10px; margin-bottom:22px; flex-wrap:wrap; }
+  .btn-wa{ background:#3E7A56; color:#fff; display:flex; align-items:center; gap:6px; padding:11px 18px; border-radius:3px; font-weight:700; font-size:0.85rem; }
+  .btn-wa svg{ width:16px; height:16px; }
+  .stars{ color:var(--mustard); font-size:0.9rem; }
+  .review{ border-top:1px solid var(--border); padding:12px 0; }
+  .review b{ font-size:0.85rem; }
+  .review p{ font-size:0.85rem; color:var(--text-soft); margin-top:2px; }
+  .review-form{ margin-top:14px; display:flex; flex-direction:column; gap:8px; }
+  .review-form textarea,.review-form select,.review-form input{
+    border:1.5px solid var(--border); background:var(--surface); color:var(--text); border-radius:3px; padding:9px 11px; font-size:0.86rem; font-family:inherit;
+  }
+  .custom-order-link{ font-size:0.82rem; text-decoration:underline; color:var(--clay); margin-top:6px; display:inline-block; }
+
+  /* cart */
+  .cart-line{ display:flex; gap:12px; align-items:center; padding:12px 0; border-bottom:1px solid var(--border); }
+  .cart-line .thumb{ width:52px; height:52px; border-radius:4px; flex:none; display:flex; align-items:center; justify-content:center; }
+  .cart-line .thumb svg{ width:50%; color:#fff; }
+  .cart-line .info{ flex:1; }
+  .cart-line .info b{ font-size:0.88rem; display:block; }
+  .cart-line .info span{ font-size:0.78rem; color:var(--text-soft); }
+  .qty{ display:flex; align-items:center; gap:8px; }
+  .qty button{ width:24px; height:24px; border:1px solid var(--border); border-radius:50%; }
+  .cart-total{ display:flex; justify-content:space-between; font-weight:700; font-size:1.05rem; padding:16px 0; }
+  .form-grid{ display:grid; gap:10px; margin:14px 0; }
+  .form-grid input,.form-grid textarea{ border:1.5px solid var(--border); background:var(--surface); color:var(--text); border-radius:3px; padding:10px 12px; font-size:0.9rem; font-family:inherit; }
+  .cod-note{ font-size:0.8rem; color:var(--text-soft); background:var(--surface); padding:10px 12px; border-radius:4px; margin-bottom:12px; }
+  .confirm-box{ text-align:center; padding:20px 0; }
+  .confirm-box .big-check{ width:56px; height:56px; border-radius:50%; background:#3E7A56; color:#fff; display:flex; align-items:center; justify-content:center; margin:0 auto 14px; font-size:1.6rem; }
+  .order-ref{ font-family:monospace; font-size:1.1rem; font-weight:700; color:var(--indigo); }
+  :root[data-theme="dark"] .order-ref{ color:var(--mustard); }
+
+  /* seller profile */
+  .seller-head{ display:flex; gap:14px; align-items:center; margin-bottom:14px; }
+  .seller-avatar{ width:58px; height:58px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.4rem; font-weight:700; color:#fff; flex:none; }
+  .seller-loc{ font-size:0.8rem; color:var(--text-soft); }
+
+  /* ---------- Chatbot ---------- */
+  .chat-fab{
+    position:fixed; bottom:calc(20px + env(safe-area-inset-bottom,0px)); right:20px; z-index:70;
+    width:56px; height:56px; border-radius:50%; background:var(--pop-grad); color:#fff;
+    display:flex; align-items:center; justify-content:center; box-shadow:0 4px 16px rgba(236,72,153,0.45);
+  }
+  .chat-fab svg{ width:24px; height:24px; }
+  .chat-panel{
+    position:fixed; bottom:calc(86px + env(safe-area-inset-bottom,0px)); right:20px; z-index:70;
+    width:min(340px, calc(100vw - 40px)); max-height:60vh; background:var(--bg); border:1.5px solid var(--border);
+    border-radius:10px; display:none; flex-direction:column; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,0.3);
+  }
+  .chat-panel.open{ display:flex; }
+  .chat-head{ background:var(--indigo); color:#fff; padding:12px 14px; font-weight:700; font-size:0.9rem; display:flex; justify-content:space-between; align-items:center; }
+  .chat-body{ flex:1; overflow-y:auto; padding:12px 14px; display:flex; flex-direction:column; gap:10px; font-size:0.86rem; }
+  .msg{ max-width:85%; padding:8px 11px; border-radius:10px; line-height:1.4; }
+  .msg.bot{ background:var(--surface); align-self:flex-start; border-bottom-left-radius:2px; }
+  .msg.user{ background:var(--clay); color:#fff; align-self:flex-end; border-bottom-right-radius:2px; }
+  .chat-input{ display:flex; border-top:1px solid var(--border); }
+  .chat-input input{ flex:1; border:none; background:none; padding:11px 12px; color:var(--text); outline:none; font-family:inherit; font-size:0.86rem; }
+  .chat-input button{ padding:0 16px; font-weight:700; color:var(--clay); }
+  .typing{ font-size:0.78rem; color:var(--text-soft); font-style:italic; }
+
+  footer{ border-top:1px solid var(--border); padding:30px 0; margin-top:20px; text-align:center; color:var(--text-soft); font-size:0.82rem; }
+  .toast{
+    position:fixed; top:calc(14px + env(safe-area-inset-top,0px)); left:50%; transform:translateX(-50%);
+    background:var(--indigo); color:#fff; padding:10px 18px; border-radius:4px; font-size:0.85rem; z-index:100;
+    opacity:0; pointer-events:none; transition:opacity .25s;
+  }
+  .toast.show{ opacity:1; }
+  @media (prefers-reduced-motion: reduce){ *{ animation:none !important; transition:none !important; } }
+</style>
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<div class="pinstripe" aria-hidden="true"></div>
+<header class="site">
+  <div class="wrap topbar">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="19" stroke="var(--clay)" stroke-width="2"/><path d="M12 24c2-6 6-10 8-10s6 4 8 10" stroke="var(--indigo)" stroke-width="2" stroke-linecap="round"/><circle cx="20" cy="14" r="2.4" fill="var(--mustard)"/></svg>
+      <div><span data-i18n="brand">Artisan Connect</span><small data-i18n="tagline">HANDMADE · LAHORE</small></div>
+    </div>
+    <div class="search-shell">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;flex:none;color:var(--text-soft)"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input id="searchInput" type="text" data-i18n-ph="searchPh" placeholder="Search khussa, pottery, embroidery...">
+      <button class="icon-btn mic" id="micBtn" title="Voice search" aria-label="Voice search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
+      </button>
+    </div>
+    <div class="head-actions">
+      <button class="lang-toggle" id="langToggle">اردو</button>
+      <button class="icon-btn cart-btn" id="cartBtn" aria-label="Cart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>
+        <span class="cart-count" id="cartCount" style="display:none">0</span>
+      </button>
+    </div>
+  </div>
+  <div class="wrap overflow-x">
+    <nav class="cats" id="catNav"></nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <h1 data-i18n="heroTitle">Crafted by hand, sold with heart</h1>
+      <p class="lede" data-i18n="heroLede">Discover khussa, pottery, embroidery and woodwork made by artisans across Lahore — buy directly, and keep local craft alive.</p>
+      <div class="hero-cta">
+        <button class="btn btn-primary" id="browseBtn" data-i18n="browseCta">Browse the bazaar</button>
+        <button class="btn btn-ghost" id="askAiHero" data-i18n="askCta">Ask our AI shopkeeper</button>
+      </div>
+    </div>
+    <div class="hero-pattern" aria-hidden="true">
+      <svg viewBox="0 0 200 200" style="position:absolute;inset:0;width:100%;height:100%;">
+        <circle cx="100" cy="150" r="34" fill="none" stroke="#F3ECDD" stroke-width="3"/>
+        <circle cx="100" cy="150" r="4" fill="#F3ECDD"/>
+        <path d="M78 118 Q100 70 122 118 Q112 100 100 100 Q88 100 78 118Z" fill="#F3ECDD"/>
+        <path d="M60 150c8-14 20-22 40-22s32 8 40 22" fill="none" stroke="#F3ECDD" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="60" cy="45" r="16" fill="none" stroke="#F3ECDD" stroke-width="3"/>
+        <circle cx="150" cy="55" r="10" fill="#F3ECDD" opacity="0.85"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="section wrap" id="shopSection">
+  <div class="section-head">
+    <h2 data-i18n="stallsTitle">Walk through the stalls</h2>
+  </div>
+  <div class="stall-grid" id="stallGrid"></div>
+</section>
+
+<section class="section wrap">
+  <div class="section-head">
+    <h2 data-i18n="productsTitle">Fresh from the workshop</h2>
+    <p id="resultCount"></p>
+  </div>
+  <div class="filters">
+    <div class="filter-group"><label data-i18n="lblArea">Area</label><select id="areaFilter"></select></div>
+    <div class="filter-group"><label data-i18n="lblPrice">Price</label><select id="priceFilter">
+      <option value="0" data-i18n="anyPrice">Any price</option>
+      <option value="1000">Under Rs. 1,000</option>
+      <option value="2500">Under Rs. 2,500</option>
+      <option value="6000">Under Rs. 6,000</option>
+    </select></div>
+    <div class="filter-group"><label data-i18n="lblSort">Sort by</label><select id="sortFilter">
+      <option value="popular" data-i18n="sortPopular">Most loved</option>
+      <option value="low">Price: Low to High</option>
+      <option value="high">Price: High to Low</option>
+    </select></div>
+  </div>
+  <div class="product-grid" id="productGrid"></div>
+</section>
+
+<footer>
+  <div class="wrap" data-i18n="footer">Karigar Bazaar — connecting Lahore's artisans with the world, one order at a time.</div>
+</footer>
+
+<!-- Product detail sheet -->
+<div class="overlay" id="pdOverlay">
+  <div class="sheet" id="pdSheet"></div>
+</div>
+
+<!-- Cart sheet -->
+<div class="overlay" id="cartOverlay">
+  <div class="sheet" id="cartSheet"></div>
+</div>
+
+<!-- Seller sheet -->
+<div class="overlay" id="sellerOverlay">
+  <div class="sheet" id="sellerSheet"></div>
+</div>
+
+<!-- Custom order sheet -->
+<div class="overlay" id="customOverlay">
+  <div class="sheet" id="customSheet"></div>
+</div>
+
+<!-- Chatbot -->
+<button class="chat-fab" id="chatFab" aria-label="Chat with AI shopkeeper">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+</button>
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-head">
+    <span data-i18n="chatTitle">AI Shopkeeper</span>
+    <button id="chatClose" style="color:#fff;font-size:1.2rem;">×</button>
+  </div>
+  <div class="chat-body" id="chatBody"></div>
+  <div class="chat-input">
+    <input id="chatInput" type="text" data-i18n-ph="chatPh" placeholder="Ask about materials, delivery, sizing...">
+    <button id="chatSend">➤</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ================= i18n ================= */
+  const dict = {
+    en:{ brand:"Artisan Connect", tagline:"HANDMADE · LAHORE",
+      searchPh:"Search khussa, pottery, embroidery...",
+      heroTitle:"Crafted by hand, sold with heart",
+      heroLede:"Discover khussa, pottery, embroidery and woodwork made by artisans across Lahore — buy directly, and keep local craft alive.",
+      browseCta:"Browse the bazaar", askCta:"Ask our AI shopkeeper",
+      stallsTitle:"Walk through the stalls", productsTitle:"Fresh from the workshop",
+      anyPrice:"Any price", sortPopular:"Most loved",
+      lblArea:"Area", lblPrice:"Price", lblSort:"Sort by",
+      chatTitle:"AI Shopkeeper", chatPh:"Ask about materials, delivery, sizing...",
+      footer:"Artisan Connect — connecting Lahore's artisans with the world, one order at a time.",
+      addToCart:"Add to cart", chatWithSeller:"Chat on WhatsApp", requestCustom:"Request a custom order",
+      cartTitle:"Your cart", checkout:"Checkout", empty:"Your cart is empty.",
+      guestCheckout:"Guest checkout · Cash on Delivery", placeOrder:"Place order (COD)",
+      orderPlaced:"Order placed!", orderThanks:"Your artisan will be notified and will prepare your order.",
+      writeReview:"Leave a review", submitReview:"Submit review", reviews:"Reviews",
+      customTitle:"Request a custom order", customDesc:"Tell the artisan what you have in mind — size, colour, quantity.",
+      submit:"Send request", requestSent:"Request sent to the artisan!",
+      viewShop:"View shop profile", noProducts:"No products match these filters yet.",
+      allAreas:"All areas of Lahore"
+    },
+    ur:{ brand:"آرٹیزن کنیکٹ", tagline:"دستکاری · لاہور",
+      searchPh:"کھسہ، مٹی کے برتن، کشیدہ کاری تلاش کریں",
+      heroTitle:"ہاتھ سے بنا، دل سے بیچا گیا",
+      heroLede:"لاہور کے کاریگروں کے ہاتھ سے بنے کھسے، مٹی کے برتن، کشیدہ کاری اور لکڑی کا کام دیکھیں — براہ راست خریدیں۔",
+      browseCta:"بازار دیکھیں", askCta:"ہمارے اے آئی دکاندار سے پوچھیں",
+      stallsTitle:"بازار کی سیر کریں", productsTitle:"ورکشاپ سے تازہ",
+      anyPrice:"کوئی بھی قیمت", sortPopular:"سب سے پسندیدہ",
+      lblArea:"علاقہ", lblPrice:"قیمت", lblSort:"ترتیب",
+      chatTitle:"اے آئی دکاندار", chatPh:"میٹریل، ڈیلیوری کے بارے میں پوچھیں",
+      footer:"آرٹیزن کنیکٹ — لاہور کے کاریگروں کو دنیا سے جوڑنا۔",
+      addToCart:"کارٹ میں شامل کریں", chatWithSeller:"واٹس ایپ پر بات کریں", requestCustom:"خاص آرڈر کی درخواست دیں",
+      cartTitle:"آپ کا کارٹ", checkout:"چیک آؤٹ", empty:"آپ کا کارٹ خالی ہے۔",
+      guestCheckout:"مہمان چیک آؤٹ · کیش آن ڈیلیوری", placeOrder:"آرڈر دیں (COD)",
+      orderPlaced:"آرڈر ہو گیا!", orderThanks:"کاریگر کو اطلاع دے دی گئی ہے۔",
+      writeReview:"تبصرہ لکھیں", submitReview:"جمع کریں", reviews:"تبصرے",
+      customTitle:"خاص آرڈر کی درخواست", customDesc:"سائز، رنگ اور مقدار بتائیں۔",
+      submit:"درخواست بھیجیں", requestSent:"درخواست کاریگر کو بھیج دی گئی!",
+      viewShop:"دکان دیکھیں", noProducts:"ان فلٹرز سے کوئی پروڈکٹ نہیں ملا۔",
+      allAreas:"لاہور کے تمام علاقے"
+    }
+  };
+  let lang = "en";
+  function t(key){ return dict[lang][key] || dict.en[key] || key; }
+  function applyStaticI18n(){
+    document.documentElement.lang = lang;
+    document.body.setAttribute('lang', lang === 'ur' ? 'ur' : '');
+    document.querySelectorAll('[data-i18n]').forEach(el=>{ el.textContent = t(el.dataset.i18n); });
+    document.querySelectorAll('[data-i18n-ph]').forEach(el=>{ el.placeholder = t(el.dataset.i18nPh); });
+    document.getElementById('langToggle').textContent = lang === 'en' ? 'اردو' : 'English';
+  }
+
+  /* ================= Data ================= */
+  const CATS = [
+    {id:'pottery', en:'Pottery', ur:'مٹی کے برتن', icon:'M6 4h12l-1 5c2 1 3 3 3 6a8 8 0 0 1-16 0c0-3 1-5 3-6L6 4z'},
+    {id:'textiles', en:'Textiles', ur:'کپڑا', icon:'M4 4h16v4H4zM6 8v12h12V8M9 12h6M9 16h6'},
+    {id:'khussa', en:'Khussa', ur:'کھسہ', icon:'M3 16c4-6 12-8 18-4-2 3-6 4-10 4-3 0-6 1-8 4z'},
+    {id:'woodwork', en:'Woodwork', ur:'لکڑی کا کام', icon:'M4 4l16 16M4 20L20 4M4 12h16'},
+    {id:'food', en:'Food', ur:'کھانا', icon:'M6 3v7a3 3 0 0 0 6 0V3M9 10v11M17 3c-2 2-2 5-2 8h4V3z'},
+    {id:'services', en:'Services', ur:'خدمات', icon:'M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z'}
+  ];
+  const AREAS = ['Anarkali','Liberty Market','Model Town','Gulberg','Walled City','Bahria Town'];
+  const SWATCH = ['#B5563A','#1F3B4D','#D9A441','#7A2E2E','#4A6B5A','#8C6A3F'];
+
+  const SELLERS = {
+    s1:{ name:'Rasheeda Bibi', en:'Rasheeda has hand-painted pottery in the Walled City for 22 years, taught by her mother.', ur:'رشیدہ 22 سال سے اندرون شہر میں مٹی کے برتن بناتی ہیں، یہ ہنر انہوں نے اپنی والدہ سے سیکھا۔', area:'Walled City' },
+    s2:{ name:'Imran Khussa House', en:'A family khussa workshop in Anarkali running since 1978, known for gold-thread tilla work.', ur:'انارکلی میں 1978 سے خاندانی کھسہ ورکشاپ، تلہ کے کام کے لیے مشہور۔', area:'Anarkali' },
+    s3:{ name:'Sughra Threadworks', en:'Sughra leads a collective of 6 women doing phulkari embroidery from Model Town.', ur:'سغریٰ ماڈل ٹاؤن سے 6 خواتین کی پھلکاری کڑھائی ٹیم چلاتی ہیں۔', area:'Model Town' },
+    s4:{ name:'Bashir Wood Studio', en:'Bashir carves sheesham wood furniture and decor near Gulberg, three generations deep.', ur:'بشیر گلبرگ کے قریب شیشم کی لکڑی سے فرنیچر بناتے ہیں، تین نسلوں سے۔', area:'Gulberg' }
+  };
+
+  const PRODUCTS = [
+    {id:1,cat:'pottery',en:'Hand-painted Blue Pottery Vase',ur:'ہاتھ سے پینٹ نیلا مٹی کا گلدان',price:2200,area:'Walled City',seller:'s1',
+     descEn:'A tall vase in traditional Multani blue-pottery style, glazed and fired in a wood kiln.',descUr:'روایتی ملتانی بلیو پاٹری انداز کا گلدان، لکڑی کے بھٹے میں پکایا گیا۔',
+     stars:4.8,reviews:[{n:'Ayesha K.',t:'Beautiful finish, even better in person.'},{n:'Hamza R.',t:'Packaging was careful, no damage at all.'}]},
+    {id:2,cat:'pottery',en:'Terracotta Chai Cup Set (6 pc)',ur:'ٹیراکوٹا چائے کپ سیٹ (6 عدد)',price:1500,area:'Walled City',seller:'s1',
+     descEn:'Unglazed clay chai cups — the way tea is meant to taste. Set of six.',descUr:'بغیر گلیز شدہ مٹی کے چائے کے کپ، چھ کا سیٹ۔',
+     stars:4.6,reviews:[{n:'Bilal S.',t:'Chai tastes so much better in these!'}]},
+    {id:3,cat:'khussa',en:'Tilla Embroidered Khussa',ur:'تلہ کڑھائی والا کھسہ',price:3200,area:'Anarkali',seller:'s2',
+     descEn:'Handmade leather khussa with gold tilla-thread embroidery, made to order in your size.',descUr:'ہاتھ سے بنا چمڑے کا کھسہ، سنہری تلہ کڑھائی کے ساتھ، آپ کے سائز میں۔',
+     stars:4.9,reviews:[{n:'Fatima N.',t:'Comfortable and stunning for weddings.'},{n:'Zara M.',t:'True to size, arrived in 4 days.'}]},
+    {id:4,cat:'khussa',en:'Classic Peshawari Khussa',ur:'روایتی پشاوری کھسہ',price:1900,area:'Anarkali',seller:'s2',
+     descEn:'Everyday leather khussa, simple and durable, hand-stitched sole.',descUr:'روزمرہ کے لیے چمڑے کا کھسہ، ہاتھ سے سلا تلوا۔',
+     stars:4.5,reviews:[{n:'Usman T.',t:'Great for daily wear, breaks in fast.'}]},
+    {id:5,cat:'textiles',en:'Phulkari Embroidered Dupatta',ur:'پھلکاری کڑھائی والا دوپٹہ',price:2800,area:'Model Town',seller:'s3',
+     descEn:'Hand-embroidered phulkari dupatta in silk thread on cotton base — a Punjab tradition.',descUr:'کپاس پر ریشمی دھاگے سے ہاتھ کی پھلکاری کڑھائی۔',
+     stars:4.7,reviews:[{n:'Mahnoor A.',t:'Colours are even richer than the photos.'}]},
+    {id:6,cat:'textiles',en:'Block-Printed Cotton Stole',ur:'بلاک پرنٹ کاٹن اسٹول',price:950,area:'Model Town',seller:'s3',
+     descEn:'Soft cotton stole, hand block-printed with natural dyes.',descUr:'نرم کاٹن اسٹول، قدرتی رنگوں سے ہاتھ سے چھپا ہوا۔',
+     stars:4.4,reviews:[{n:'Sana I.',t:'Lightweight, perfect for summer.'}]},
+    {id:7,cat:'woodwork',en:'Sheesham Wood Jewellery Box',ur:'شیشم کی زیورات کی ڈبیا',price:2600,area:'Gulberg',seller:'s4',
+     descEn:'Hand-carved sheesham wood box with brass inlay, felt-lined interior.',descUr:'ہاتھ سے تراشا شیشم کا ڈبہ، پیتل کی جڑائی کے ساتھ۔',
+     stars:4.8,reviews:[{n:'Owais D.',t:'Gifted it to my mother, she loved the carving.'}]},
+    {id:8,cat:'woodwork',en:'Carved Wooden Wall Panel',ur:'کندہ لکڑی کا دیوار پینل',price:5200,area:'Gulberg',seller:'s4',
+     descEn:'Large jali-pattern wall panel, hand-carved from a single sheesham plank.',descUr:'بڑا جالی پیٹرن دیوار پینل، ایک ہی شیشم کے تختے سے تراشا گیا۔',
+     stars:4.9,reviews:[{n:'Noor F.',t:'Centerpiece of our living room now.'}]},
+    {id:9,cat:'food',en:'Homemade Mango Achaar (1kg)',ur:'گھریلو آم کا اچار (1 کلو)',price:750,area:'Bahria Town',seller:'s1',
+     descEn:'Sun-pickled mango achaar, made in small batches with mustard oil.',descUr:'سرسوں کے تیل میں دھوپ میں پکایا آم کا اچار۔',
+     stars:4.6,reviews:[{n:'Kamran L.',t:"Tastes just like my grandmother's."}]},
+    {id:10,cat:'services',en:'Bridal Mehndi Booking',ur:'دلہن مہندی بکنگ',price:6000,area:'Liberty Market',seller:'s3',
+     descEn:'Full bridal mehndi session, both hands and feet, 4-5 hours.',descUr:'مکمل دلہن مہندی سیشن، دونوں ہاتھ اور پاؤں، 4-5 گھنٹے۔',
+     stars:4.9,reviews:[{n:'Iqra W.',t:'Booked her for my wedding, hands down the best.'}]},
+    {id:11,cat:'pottery',en:'Ceramic Table Lamp Base',ur:'سیرامک میز کا لیمپ',price:3400,area:'Walled City',seller:'s1',
+     descEn:'Hand-thrown ceramic lamp base with a matte glaze, wiring not included.',descUr:'ہاتھ سے بنا سیرامک لیمپ بیس، میٹ گلیز کے ساتھ۔',
+     stars:4.5,reviews:[{n:'Danish P.',t:'Beautiful shape, easy to find a shade for it.'}]},
+    {id:12,cat:'textiles',en:'Ajrak Print Bedsheet Set',ur:'اجرک پرنٹ بیڈ شیٹ سیٹ',price:2100,area:'Liberty Market',seller:'s3',
+     descEn:'Traditional Sindhi ajrak-print cotton bedsheet with two pillow covers.',descUr:'روایتی سندھی اجرک پرنٹ کاٹن بیڈ شیٹ، دو تکیے کے غلاف کے ساتھ۔',
+     stars:4.7,reviews:[{n:'Rida H.',t:'Colours held up well after washing.'}]}
+  ];
+
+  let userReviews = JSON.parse(localStorage.getItem('kb_reviews')||'{}');
+  let cart = JSON.parse(localStorage.getItem('kb_cart')||'[]');
+  let state = { cat:'all', area:'all', price:0, sort:'popular', q:'' };
+
+  function money(n){ return 'Rs. ' + n.toLocaleString('en-PK'); }
+  function catLabel(c){ return lang==='ur' ? c.ur : c.en; }
+  function prodTitle(p){ return lang==='ur' ? p.ur : p.en; }
+  function prodDesc(p){ return lang==='ur' ? p.descUr : p.descEn; }
+  function sellerBlurb(s){ return lang==='ur' ? s.ur : s.en; }
+
+  function iconSvg(path, extra){ return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" '+(extra||'')+'><path d="'+path+'"/></svg>'; }
+
+  function toast(msg){
+    const el = document.getElementById('toast');
+    el.textContent = msg; el.classList.add('show');
+    clearTimeout(toast._t);
+    toast._t = setTimeout(()=>el.classList.remove('show'), 2200);
+  }
+
+  /* ================= Render: nav + stalls ================= */
+  function renderCatNav(){
+    const nav = document.getElementById('catNav');
+    nav.innerHTML = '<button data-cat="all" class="'+(state.cat==='all'?'active':'')+'">'+(lang==='ur'?'سب':'All')+'</button>' +
+      CATS.map(c=>'<button data-cat="'+c.id+'" class="'+(state.cat===c.id?'active':'')+'">'+catLabel(c)+'</button>').join('');
+    nav.querySelectorAll('button').forEach(b=>b.onclick=()=>{ state.cat=b.dataset.cat; render(); document.getElementById('shopSection').scrollIntoView({behavior:'smooth'}); });
+  }
+  function renderStalls(){
+    const grid = document.getElementById('stallGrid');
+    grid.innerHTML = CATS.map(c=>
+      '<button class="stall '+(state.cat===c.id?'active':'')+'" data-cat="'+c.id+'">'+
+        iconSvg(c.icon) + '<b>'+catLabel(c)+'</b><span>'+PRODUCTS.filter(p=>p.cat===c.id).length+' '+(lang==='ur'?'اشیاء':'items')+'</span>'+
+      '</button>').join('');
+    grid.querySelectorAll('.stall').forEach(b=>b.onclick=()=>{ state.cat = state.cat===b.dataset.cat ? 'all' : b.dataset.cat; render(); });
+  }
+  function renderAreaFilter(){
+    const sel = document.getElementById('areaFilter');
+    sel.innerHTML = '<option value="all">'+t('allAreas')+'</option>' + AREAS.map(a=>'<option value="'+a+'">'+a+'</option>').join('');
+    sel.value = state.area;
+  }
+
+  /* ================= Render: products ================= */
+  function filteredProducts(){
+    let list = PRODUCTS.filter(p=>{
+      if(state.cat!=='all' && p.cat!==state.cat) return false;
+      if(state.area!=='all' && p.area!==state.area) return false;
+      if(state.price>0 && p.price>state.price) return false;
+      if(state.q){
+        const hay = (p.en+' '+p.ur+' '+p.descEn).toLowerCase();
+        if(!hay.includes(state.q.toLowerCase())) return false;
+      }
+      return true;
+    });
+    if(state.sort==='low') list.sort((a,b)=>a.price-b.price);
+    else if(state.sort==='high') list.sort((a,b)=>b.price-a.price);
+    else list.sort((a,b)=>b.stars-a.stars);
+    return list;
+  }
+  function renderProducts(){
+    const list = filteredProducts();
+    document.getElementById('resultCount').textContent = list.length + (lang==='ur' ? ' نتائج' : ' items');
+    const grid = document.getElementById('productGrid');
+    if(!list.length){ grid.innerHTML = '<p class="empty-msg">'+t('noProducts')+'</p>'; return; }
+    grid.innerHTML = list.map(p=>{
+      const cat = CATS.find(c=>c.id===p.cat);
+      const color = SWATCH[p.id % SWATCH.length];
+      return '<div class="card" data-id="'+p.id+'">' +
+        '<div class="card-media" style="background:'+color+'">' + iconSvg(cat.icon) + '</div>' +
+        '<div class="card-body">' +
+          '<div class="card-cat">'+catLabel(cat)+' · '+p.area+'</div>' +
+          '<div class="card-title">'+prodTitle(p)+'</div>' +
+          '<div class="card-artisan">'+SELLERS[p.seller].name+'</div>' +
+          '<div class="card-foot"><span class="price">'+money(p.price)+'</span>' +
+          '<button class="add-btn" data-add="'+p.id+'">'+t('addToCart')+'</button></div>' +
+        '</div></div>';
+    }).join('');
+    grid.querySelectorAll('.card').forEach(c=>c.addEventListener('click', e=>{
+      if(e.target.closest('[data-add]')) return;
+      openProduct(parseInt(c.dataset.id));
+    }));
+    grid.querySelectorAll('[data-add]').forEach(b=>b.addEventListener('click', e=>{
+      e.stopPropagation(); addToCart(parseInt(b.dataset.add), 1); toast(lang==='ur'?'کارٹ میں شامل کر دیا گیا':'Added to cart');
+    }));
+  }
+
+  /* ================= Product detail sheet ================= */
+  function openProduct(id){
+    const p = PRODUCTS.find(x=>x.id===id);
+    const cat = CATS.find(c=>c.id===p.cat);
+    const seller = SELLERS[p.seller];
+    const color = SWATCH[p.id % SWATCH.length];
+    const extraReviews = userReviews[id] || [];
+    const allReviews = p.reviews.concat(extraReviews);
+    const stars = '★★★★★'.slice(0,Math.round(p.stars)) + '☆☆☆☆☆'.slice(0, 5-Math.round(p.stars));
+    document.getElementById('pdSheet').innerHTML =
+      '<button class="sheet-close" data-close>×</button>' +
+      '<div class="pd-gallery">' + [0,1,2].map(()=>'<div class="pd-thumb" style="background:'+color+'">'+iconSvg(cat.icon)+'</div>').join('') + '</div>' +
+      '<div class="pd-cat">'+catLabel(cat)+' · '+p.area+'</div>' +
+      '<h3 class="pd-title">'+prodTitle(p)+'</h3>' +
+      '<div class="pd-price">'+money(p.price)+'</div>' +
+      '<div class="stars">'+stars+' <span style="color:var(--text-soft);font-size:0.8rem">('+allReviews.length+' '+t('reviews').toLowerCase()+')</span></div>' +
+      '<p class="pd-desc" style="margin-top:10px">'+prodDesc(p)+'</p>' +
+      '<div class="pd-story"><b>'+seller.name+'</b>'+sellerBlurb(seller)+'</div>' +
+      '<div class="pd-meta"><span>📍 '+p.area+'</span><span>🚚 '+(lang==='ur'?'3-5 دن ڈیلیوری':'3–5 day delivery')+'</span><span>💵 COD</span></div>' +
+      '<div class="pd-actions">' +
+        '<button class="btn btn-primary" data-add="'+p.id+'">'+t('addToCart')+'</button>' +
+        '<a class="btn-wa" target="_blank" href="https://wa.me/923406063725?text='+encodeURIComponent("Hi! I'm interested in: "+p.en)+'">' +
+          iconSvg('M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z') + t('chatWithSeller') + '</a>' +
+      '</div>' +
+      '<button class="custom-order-link" data-custom="'+p.id+'">✎ '+t('requestCustom')+'</button>' +
+      '<button class="custom-order-link" data-seller="'+p.seller+'" style="display:block;margin-top:4px">🏪 '+t('viewShop')+'</button>' +
+      '<h3 style="margin-top:22px;font-size:1.1rem">'+t('reviews')+'</h3>' +
+      allReviews.map(r=>'<div class="review"><b>'+r.n+'</b><p>'+r.t+'</p></div>').join('') +
+      '<div class="review-form">' +
+        '<b style="font-size:0.85rem">'+t('writeReview')+'</b>' +
+        '<input id="revName" type="text" placeholder="'+(lang==='ur'?'آپ کا نام':'Your name')+'">' +
+        '<textarea id="revText" rows="2" placeholder="'+(lang==='ur'?'اپنا تجربہ لکھیں':'Share your experience')+'"></textarea>' +
+        '<button class="btn btn-ghost" data-submit-review="'+p.id+'" style="align-self:flex-start">'+t('submitReview')+'</button>' +
+      '</div>';
+    document.querySelectorAll('#pdSheet [data-add]').forEach(b=>b.onclick=()=>{ addToCart(p.id,1); toast(lang==='ur'?'کارٹ میں شامل کر دیا گیا':'Added to cart'); });
+    const customBtn = document.querySelector('#pdSheet [data-custom]');
+    if(customBtn) customBtn.onclick = ()=>{ closeAll(); openCustomOrder(p); };
+    const sellerBtn = document.querySelector('#pdSheet [data-seller]');
+    if(sellerBtn) sellerBtn.onclick = ()=>{ closeAll(); openSeller(p.seller); };
+    const subRev = document.querySelector('#pdSheet [data-submit-review]');
+    if(subRev) subRev.onclick = ()=>{
+      const name = document.getElementById('revName').value.trim() || (lang==='ur'?'گمنام':'Anonymous');
+      const text = document.getElementById('revText').value.trim();
+      if(!text) return;
+      if(!userReviews[id]) userReviews[id] = [];
+      userReviews[id].push({n:name, t:text});
+      localStorage.setItem('kb_reviews', JSON.stringify(userReviews));
+      openProduct(id);
+    };
+    show('pdOverlay');
+  }
+
+  function openSeller(sellerId){
+    const s = SELLERS[sellerId];
+    const color = SWATCH[Object.keys(SELLERS).indexOf(sellerId) % SWATCH.length];
+    const items = PRODUCTS.filter(p=>p.seller===sellerId);
+    document.getElementById('sellerSheet').innerHTML =
+      '<button class="sheet-close" data-close>×</button>' +
+      '<div class="seller-head"><div class="seller-avatar" style="background:'+color+'">'+s.name.charAt(0)+'</div>' +
+      '<div><h3 style="font-size:1.2rem">'+s.name+'</h3><div class="seller-loc">📍 '+s.area+'</div></div></div>' +
+      '<p class="pd-desc">'+sellerBlurb(s)+'</p>' +
+      '<h3 style="margin:16px 0 10px;font-size:1rem">'+(lang==='ur'?'دکان کی اشیاء':'Shop items')+'</h3>' +
+      '<div class="product-grid">' + items.map(p=>{
+        const cat = CATS.find(c=>c.id===p.cat); const col = SWATCH[p.id % SWATCH.length];
+        return '<div class="card" data-id="'+p.id+'"><div class="card-media" style="background:'+col+'">'+iconSvg(cat.icon)+'</div>' +
+          '<div class="card-body"><div class="card-title" style="font-size:0.88rem">'+prodTitle(p)+'</div><div class="price">'+money(p.price)+'</div></div></div>';
+      }).join('') + '</div>';
+    document.querySelectorAll('#sellerSheet .card').forEach(c=>c.onclick=()=>{ closeAll(); openProduct(parseInt(c.dataset.id)); });
+    show('sellerOverlay');
+  }
+
+  function openCustomOrder(p){
+    document.getElementById('customSheet').innerHTML =
+      '<button class="sheet-close" data-close>×</button>' +
+      '<h3 class="pd-title">'+t('customTitle')+'</h3>' +
+      '<p class="pd-desc">'+t('customDesc')+'</p>' +
+      '<div class="form-grid">' +
+        '<input id="coName" placeholder="'+(lang==='ur'?'آپ کا نام':'Your name')+'">' +
+        '<input id="coPhone" placeholder="'+(lang==='ur'?'فون نمبر':'Phone number')+'">' +
+        '<textarea id="coDetails" rows="3" placeholder="'+(lang==='ur'?'سائز، رنگ، مقدار':'Size, colour, quantity...')+'"></textarea>' +
+      '</div>' +
+      '<button class="btn btn-primary" id="coSubmit">'+t('submit')+'</button>';
+    document.getElementById('coSubmit').onclick = ()=>{
+      const name = document.getElementById('coName').value.trim();
+      if(!name){ toast(lang==='ur'?'براہ کرم نام لکھیں':'Please enter your name'); return; }
+      document.getElementById('customSheet').innerHTML =
+        '<div class="confirm-box"><div class="big-check">✓</div><h3>'+t('requestSent')+'</h3></div>';
+      setTimeout(closeAll, 1800);
+    };
+    show('customOverlay');
+  }
+
+  /* ================= Cart ================= */
+  function addToCart(id, qty){
+    const line = cart.find(l=>l.id===id);
+    if(line) line.qty += qty; else cart.push({id, qty});
+    saveCart(); updateCartCount();
+  }
+  function saveCart(){ localStorage.setItem('kb_cart', JSON.stringify(cart)); }
+  function updateCartCount(){
+    const n = cart.reduce((s,l)=>s+l.qty,0);
+    const el = document.getElementById('cartCount');
+    el.textContent = n; el.style.display = n>0 ? 'flex' : 'none';
+  }
+  function cartTotal(){
+    return cart.reduce((s,l)=>{ const p = PRODUCTS.find(x=>x.id===l.id); return s + (p?p.price*l.qty:0); }, 0);
+  }
+  function renderCart(){
+    const sheet = document.getElementById('cartSheet');
+    if(!cart.length){
+      sheet.innerHTML = '<button class="sheet-close" data-close>×</button><h3 class="pd-title">'+t('cartTitle')+'</h3><p class="empty-msg">'+t('empty')+'</p>';
+      show('cartOverlay'); return;
+    }
+    sheet.innerHTML = '<button class="sheet-close" data-close>×</button><h3 class="pd-title">'+t('cartTitle')+'</h3>' +
+      cart.map(l=>{
+        const p = PRODUCTS.find(x=>x.id===l.id); if(!p) return '';
+        const cat = CATS.find(c=>c.id===p.cat); const color = SWATCH[p.id % SWATCH.length];
+        return '<div class="cart-line" data-id="'+p.id+'">' +
+          '<div class="thumb" style="background:'+color+'">'+iconSvg(cat.icon)+'</div>' +
+          '<div class="info"><b>'+prodTitle(p)+'</b><span>'+money(p.price)+'</span></div>' +
+          '<div class="qty"><button data-dec="'+p.id+'">−</button><span>'+l.qty+'</span><button data-inc="'+p.id+'">+</button></div>' +
+        '</div>';
+      }).join('') +
+      '<div class="cart-total"><span>'+(lang==='ur'?'کل':'Total')+'</span><span>'+money(cartTotal())+'</span></div>' +
+      '<button class="btn btn-primary" id="goCheckout" style="width:100%">'+t('checkout')+'</button>';
+    sheet.querySelectorAll('[data-inc]').forEach(b=>b.onclick=()=>{ addToCart(parseInt(b.dataset.inc),1); renderCart(); updateCartCount(); });
+    sheet.querySelectorAll('[data-dec]').forEach(b=>b.onclick=()=>{
+      const id = parseInt(b.dataset.dec); const line = cart.find(l=>l.id===id);
+      if(line){ line.qty -= 1; if(line.qty<=0) cart = cart.filter(l=>l.id!==id); saveCart(); renderCart(); updateCartCount(); }
+    });
+    document.getElementById('goCheckout').onclick = openCheckout;
+    show('cartOverlay');
+  }
+  function openCheckout(){
+    document.getElementById('cartSheet').innerHTML =
+      '<button class="sheet-close" data-close>×</button>' +
+      '<h3 class="pd-title">'+t('checkout')+'</h3>' +
+      '<div class="cod-note">'+t('guestCheckout')+'</div>' +
+      '<div class="form-grid">' +
+        '<input id="ckName" placeholder="'+(lang==='ur'?'پورا نام':'Full name')+'">' +
+        '<input id="ckPhone" placeholder="'+(lang==='ur'?'فون نمبر':'Phone number')+'">' +
+        '<textarea id="ckAddr" rows="2" placeholder="'+(lang==='ur'?'ڈیلیوری پتہ':'Delivery address')+'"></textarea>' +
+      '</div>' +
+      '<div class="cart-total"><span>'+(lang==='ur'?'کل':'Total')+'</span><span>'+money(cartTotal())+'</span></div>' +
+      '<button class="btn btn-primary" id="ckSubmit" style="width:100%">'+t('placeOrder')+'</button>';
+    document.getElementById('ckSubmit').onclick = ()=>{
+      const name = document.getElementById('ckName').value.trim();
+      const addr = document.getElementById('ckAddr').value.trim();
+      if(!name || !addr){ toast(lang==='ur'?'نام اور پتہ درکار ہے':'Name and address are required'); return; }
+      const ref = 'KB-' + Math.random().toString(36).slice(2,8).toUpperCase();
+      document.getElementById('cartSheet').innerHTML =
+        '<div class="confirm-box"><div class="big-check">✓</div><h3>'+t('orderPlaced')+'</h3>' +
+        '<p class="pd-desc">'+t('orderThanks')+'</p>' +
+        '<p style="margin-top:10px">'+(lang==='ur'?'آرڈر نمبر':'Order reference')+': <span class="order-ref">'+ref+'</span></p></div>';
+      cart = []; saveCart(); updateCartCount();
+      setTimeout(closeAll, 2600);
+    };
+  }
+
+  /* ================= Overlays ================= */
+  function show(id){ document.getElementById(id).classList.add('open'); }
+  function closeAll(){ document.querySelectorAll('.overlay').forEach(o=>o.classList.remove('open')); }
+  document.addEventListener('click', e=>{
+    if(e.target.matches('.overlay')) closeAll();
+    if(e.target.closest('[data-close]')) closeAll();
+  });
+
+  /* ================= Voice search ================= */
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  let recognizer = null, listening = false;
+  function setupVoice(){
+    const micBtn = document.getElementById('micBtn');
+    if(!SR){ micBtn.style.opacity = 0.35; micBtn.title = 'Voice search not supported in this browser'; return; }
+    recognizer = new SR();
+    recognizer.continuous = false; recognizer.interimResults = false;
+    recognizer.onresult = (ev)=>{
+      const text = ev.results[0][0].transcript;
+      document.getElementById('searchInput').value = text;
+      state.q = text; render();
+      toast((lang==='ur'?'تلاش: ':'Searching: ') + text);
+    };
+    recognizer.onend = ()=>{ listening=false; micBtn.classList.remove('listening'); };
+    recognizer.onerror = ()=>{ listening=false; micBtn.classList.remove('listening'); toast(lang==='ur'?'آواز نہیں سنی جا سکی':'Could not hear that, try again'); };
+    micBtn.onclick = ()=>{
+      if(listening){ recognizer.stop(); return; }
+      try{
+        recognizer.lang = lang==='ur' ? 'ur-PK' : 'en-US';
+        recognizer.start(); listening = true; micBtn.classList.add('listening');
+      }catch(err){ /* already started */ }
+    };
+  }
+
+  /* ================= AI Chatbot (sample capability) ================= */
+  let sampleFn = null;
+  async function initSample(){
+    try{
+      sampleFn = await claude.use('sample');
+    }catch(err){ sampleFn = null; }
+  }
+  function pushMsg(role, text){
+    const body = document.getElementById('chatBody');
+    const div = document.createElement('div');
+    div.className = 'msg ' + (role==='user' ? 'user' : 'bot');
+    div.textContent = text;
+    body.appendChild(div);
+    body.scrollTop = body.scrollHeight;
+    return div;
+  }
+  function catalogSummary(){
+    return PRODUCTS.map(p=>p.en+' ('+p.area+', '+money(p.price)+', seller: '+SELLERS[p.seller].name+')').join('; ');
+  }
+  async function askAI(question){
+    pushMsg('user', question);
+    const typing = pushMsg('bot', lang==='ur' ? 'ٹائپ کر رہا ہے...' : 'Typing...');
+    if(!sampleFn){
+      typing.textContent = lang==='ur'
+        ? 'معذرت، یہ اے آئی فیچر ابھی دستیاب نہیں۔ براہ کرم WhatsApp پر کاریگر سے رابطہ کریں۔'
+        : "Sorry, the AI assistant isn't available right now — try the WhatsApp button on a product instead.";
+      return;
+    }
+    try{
+      const prompt = "You are a friendly shopkeeper (in Urdu-inflected English or Urdu, matching the user's language: " + lang + ") for 'Karigar Bazaar', an online marketplace for handmade artisan products from Lahore, Pakistan. Only answer using this product catalog, and keep replies under 60 words, warm and helpful:\\n" + catalogSummary() + "\\n\\nBuyer question: " + question;
+      const res = await sampleFn(prompt, { modelTier: 'quick' });
+      typing.textContent = res.text || (lang==='ur' ? 'معذرت، دوبارہ کوشش کریں۔' : 'Sorry, please try again.');
+    }catch(err){
+      typing.textContent = lang==='ur' ? 'ابھی جواب نہیں مل سکا، دوبارہ کوشش کریں۔' : "Couldn't get a reply just now — please try again.";
+    }
+  }
+  function setupChat(){
+    const fab = document.getElementById('chatFab'), panel = document.getElementById('chatPanel');
+    fab.onclick = ()=>{
+      panel.classList.toggle('open');
+      if(panel.classList.contains('open') && !document.getElementById('chatBody').childElementCount){
+        pushMsg('bot', lang==='ur' ? 'السلام علیکم! کاریگر بازار میں خوش آمدید۔ میں آپ کی کیا مدد کر سکتا ہوں؟' : "Assalam-o-Alaikum! Welcome to Karigar Bazaar. What can I help you find today?");
+      }
+    };
+    document.getElementById('chatClose').onclick = ()=>panel.classList.remove('open');
+    document.getElementById('askAiHero').onclick = ()=>{
+      panel.classList.add('open');
+      if(!document.getElementById('chatBody').childElementCount){
+        pushMsg('bot', lang==='ur' ? 'السلام علیکم! آرٹیزن کنیکٹ میں خوش آمدید۔ میں آپ کی کیا مدد کر سکتا ہوں؟' : "Assalam-o-Alaikum! Welcome to Artisan Connect. What can I help you find today?");
+      }
+    };
+    function send(){
+      const input = document.getElementById('chatInput');
+      const val = input.value.trim();
+      if(!val) return;
+      input.value = '';
+      askAI(val);
+    }
+    document.getElementById('chatSend').onclick = send;
+    document.getElementById('chatInput').addEventListener('keydown', e=>{ if(e.key==='Enter') send(); });
+  }
+
+  /* ================= Wiring ================= */
+  function render(){
+    renderCatNav(); renderStalls(); renderAreaFilter(); renderProducts();
+    applyStaticI18n();
+    document.getElementById('areaFilter').value = state.area;
+  }
+  function setupControls(){
+    document.getElementById('searchInput').addEventListener('input', e=>{ state.q = e.target.value; renderProducts(); });
+    document.getElementById('areaFilter').addEventListener('change', e=>{ state.area = e.target.value; renderProducts(); });
+    document.getElementById('priceFilter').addEventListener('change', e=>{ state.price = parseInt(e.target.value); renderProducts(); });
+    document.getElementById('sortFilter').addEventListener('change', e=>{ state.sort = e.target.value; renderProducts(); });
+    document.getElementById('cartBtn').onclick = renderCart;
+    document.getElementById('browseBtn').onclick = ()=>document.getElementById('shopSection').scrollIntoView({behavior:'smooth'});
+    document.getElementById('langToggle').onclick = ()=>{ lang = lang==='en' ? 'ur' : 'en'; render(); };
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    render();
+    setupControls();
+    setupVoice();
+    setupChat();
+    updateCartCount();
+    initSample();
+  });
+})();
+</script>
+</body>
+</html>
